@@ -8,4 +8,9 @@ public class IdempotentException extends RuntimeException {
         super();
         this.message = message;
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }
