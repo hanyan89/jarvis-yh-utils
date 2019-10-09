@@ -10,7 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.METHOD,ElementType.TYPE})
 public @interface Monitor {
 
-    int timeout() default 200;
+    int timeout() default 1000;
 
     boolean printReq() default true;
 
