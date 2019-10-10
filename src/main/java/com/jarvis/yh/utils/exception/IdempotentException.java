@@ -1,16 +1,11 @@
 package com.jarvis.yh.utils.exception;
 
-public class IdempotentException extends RuntimeException {
+import com.jarvis.lib.common.base.exception.BaseException;
 
-    public String message;
+public class IdempotentException extends BaseException {
 
     public IdempotentException(String message) {
-        super();
-        this.message = message;
+        super("110", message, null);
     }
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
 }
