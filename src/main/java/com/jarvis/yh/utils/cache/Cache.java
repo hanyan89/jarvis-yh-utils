@@ -29,8 +29,7 @@ public class Cache {
     }
 
     public void set(String prefix, String key, String value, Long timeout, TimeUnit timeUnit) {
-        key = prefix + key;
-        if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value)) {
+        if (StringUtils.isEmpty(prefix + key) || StringUtils.isEmpty(value)) {
             return;
         }
         try {
