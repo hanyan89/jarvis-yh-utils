@@ -49,11 +49,6 @@ public class MonitorAspect {
             Signature signature = joinPoint.getSignature();
 
             Monitor monitor = (Monitor) signature.getDeclaringType().getAnnotation(Monitor.class);
-            if(monitor != null){
-                timeout = monitor.timeout();
-                printReq = monitor.printReq();
-                printRes = monitor.printRes();
-            }
             if (signature instanceof MethodSignature) {
                 MethodSignature methodSignature = (MethodSignature) signature;
                 monitor = methodSignature.getMethod().getDeclaredAnnotation(Monitor.class);
@@ -62,6 +57,11 @@ public class MonitorAspect {
                 }
             }
 
+            if(monitor != null){
+                timeout = monitor.timeout();
+                printReq = monitor.printReq();
+                printRes = monitor.printRes();
+            }
             signatureName = signature.toString();
 
             if (printReq) {
