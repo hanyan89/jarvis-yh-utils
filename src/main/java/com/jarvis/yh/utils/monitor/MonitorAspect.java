@@ -51,9 +51,9 @@ public class MonitorAspect {
             Monitor monitor = (Monitor) signature.getDeclaringType().getAnnotation(Monitor.class);
             if (signature instanceof MethodSignature) {
                 MethodSignature methodSignature = (MethodSignature) signature;
-                monitor = methodSignature.getMethod().getDeclaredAnnotation(Monitor.class);
+                Monitor methodMonitor = methodSignature.getMethod().getDeclaredAnnotation(Monitor.class);
                 if (monitor != null) {
-                    timeout = monitor.timeout();
+                    monitor = methodMonitor;
                 }
             }
 
