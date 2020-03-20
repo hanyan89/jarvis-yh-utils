@@ -52,7 +52,7 @@ public class MonitorAspect {
             if (signature instanceof MethodSignature) {
                 MethodSignature methodSignature = (MethodSignature) signature;
                 Monitor methodMonitor = methodSignature.getMethod().getDeclaredAnnotation(Monitor.class);
-                if (monitor != null) {
+                if (methodMonitor != null) {
                     monitor = methodMonitor;
                 }
             }
