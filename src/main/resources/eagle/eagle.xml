@@ -13,4 +13,8 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %thread %logger{36} | %msg%n</pattern>
         </encoder>
     </appender>
+
+    <logger name="eagle" level="info">
+        <appender-ref ref="EAGLE_EYE_FILE"/>
+    </logger>
 </included>
