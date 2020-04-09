@@ -1,7 +1,6 @@
 package com.jarvis.yh.utils.monitor;
 
 import com.alibaba.fastjson.JSON;
-import com.jarvis.yh.utils.trace.TraceId;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -11,7 +10,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 
 @Aspect
 public class MonitorAspect {
@@ -26,8 +24,6 @@ public class MonitorAspect {
 
     @Around("monitorPointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        TraceId.set();
-        MDC.put("traceId", TraceId.get());
         long start = System.currentTimeMillis();
         try {
             Object proceed = joinPoint.proceed();
@@ -36,8 +32,6 @@ public class MonitorAspect {
         } catch (Exception e) {
             log(joinPoint, start, null, e);
             throw e;
-        } finally {
-            MDC.remove("traceId");
         }
     }
 
