@@ -72,9 +72,10 @@ public class MonitorAspect {
                 List objects = new ArrayList();
                 if (args != null) {
                     for (Object arg : args) {
-                        objects.add(arg);
                         if (arg instanceof InputStreamSource) {
                             objects.add(null);
+                        } else {
+                            objects.add(arg);
                         }
                     }
                 }
