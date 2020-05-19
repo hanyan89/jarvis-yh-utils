@@ -10,6 +10,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamSource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Aspect
 public class MonitorAspect {
@@ -65,7 +69,16 @@ public class MonitorAspect {
             signatureName = signature.toString();
 
             if (printReq) {
-                reqLog = JSON.toJSONString(args);
+                List objects = new ArrayList();
+                if (args != null) {
+                    for (Object arg : args) {
+                        objects.add(arg);
+                        if (arg instanceof InputStreamSource) {
+                            objects.add(null);
+                        }
+                    }
+                }
+                reqLog = JSON.toJSONString(objects);
             }
             if (printRes) {
                 resLog = JSON.toJSONString(result);
