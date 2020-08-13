@@ -14,5 +14,5 @@ public @interface Monitor {
 
     boolean printReq() default true;
 
-    boolean printRes() default true;
+    boolean printRes() default false;
 }
