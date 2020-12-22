@@ -1,7 +1,8 @@
 package com.jarvis.yh.utils.cache;
 
 import com.alibaba.fastjson.JSON;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 
@@ -9,8 +10,9 @@ import javax.annotation.Resource;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 public class Cache {
+
+    public static final Logger log = LoggerFactory.getLogger(Cache.class);
 
     @Resource
     private StringRedisTemplate redis;
