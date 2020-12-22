@@ -1,7 +1,6 @@
 package com.jarvis.yh.utils.cache;
 
 import com.alibaba.fastjson.JSON;
-import com.jarvis.lib.common.base.exception.UncheckedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
@@ -78,7 +77,7 @@ public class Cache {
 
     public <T> T get(String prefix, Long key, Class<T> clz) {
         if (key == null) {
-            throw new UncheckedException("9999","key不能为空",null);
+            throw new RuntimeException("key不能为空");
         }
         return get(prefix, key.toString(), clz);
     }
