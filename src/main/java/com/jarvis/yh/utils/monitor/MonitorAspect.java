@@ -12,8 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamSource;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Aspect
 public class MonitorAspect {
@@ -52,12 +55,22 @@ public class MonitorAspect {
             args = joinPoint.getArgs();
             Signature signature = joinPoint.getSignature();
 
+            Set<Integer> ignoreArgIndexSet = new HashSet<>();
             Monitor monitor = (Monitor) signature.getDeclaringType().getAnnotation(Monitor.class);
             if (signature instanceof MethodSignature) {
                 MethodSignature methodSignature = (MethodSignature) signature;
                 Monitor methodMonitor = methodSignature.getMethod().getDeclaredAnnotation(Monitor.class);
                 if (methodMonitor != null) {
                     monitor = methodMonitor;
+                }
+
+                Parameter[] parameters = methodSignature.getMethod().getParameters();
+                for (int i = 0; i < parameters.length; i++) {
+                    Parameter parameter = parameters[i];
+                    MonitorIgnore monitorIgnore = parameter.getAnnotation(MonitorIgnore.class);
+                    if (monitorIgnore != null) {
+                        ignoreArgIndexSet.add(i);
+                    }
                 }
             }
 
@@ -71,8 +84,10 @@ public class MonitorAspect {
             if (printReq) {
                 List objects = new ArrayList();
                 if (args != null) {
-                    for (Object arg : args) {
-                        if (arg instanceof InputStreamSource) {
+                    for (int i = 0; i < args.length; i++) {
+                        Object arg = args[i];
+                        if (ignoreArgIndexSet.contains(i)
+                                || arg instanceof InputStreamSource) {
                             objects.add(null);
                         } else {
                             objects.add(arg);
